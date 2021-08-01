@@ -65,4 +65,21 @@ router.post('/removeFromFavorite', (req, res) => {
   });
 });
 
+router.post('/getFavoriteMovie', (req, res) => {
+  Favorite.find({ userFrom: req.body.userFrom }).exec((err, doc) => {
+    if (err) return res.status(400).send(err);
+    res.status(200).json({ success: true, doc });
+  });
+});
+
+router.post('/removeFromFavorite', (req, res) => {
+  Favorite.findOneAndDelete({
+    movieId: req.body.movieId,
+    userFrom: req.body.userFrom,
+  }).exec((err, doc) => {
+    if (err) return res.status(400).send(err);
+    res.status(200).json({ success: true, doc });
+  });
+});
+
 module.exports = router;
